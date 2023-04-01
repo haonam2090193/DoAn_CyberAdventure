@@ -6,13 +6,13 @@ public class ItemCollector : MonoBehaviour
 {
     public delegate void CollectCherry(int cherry); //Dinh nghia ham delegate 
     public static CollectCherry collectCherryDelegate; //Khai bao ham delegate
-    private int cherries = 0;
+    private int moneys = 0;
 
     private void Start()
     {
         if (GameManager.HasInstance)
         {
-            cherries = GameManager.Instance.Cherries;
+            moneys = GameManager.Instance.Moneys;
         }
     }
 
@@ -25,9 +25,9 @@ public class ItemCollector : MonoBehaviour
                 AudioManager.Instance.PlaySE(AUDIO.SE_COLLECT);
             }
             Destroy(collision.gameObject);
-            cherries++;
-            GameManager.Instance.UpdateCherries(cherries);
-            collectCherryDelegate(cherries); //Broadcast event
+            moneys++;
+            GameManager.Instance.UpdateCherries(moneys);
+            collectCherryDelegate(moneys); //Broadcast event
         }
     }
 }
