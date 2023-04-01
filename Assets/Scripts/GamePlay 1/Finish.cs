@@ -35,7 +35,7 @@ public class Finish : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         if (UIManager.HasInstance && AudioManager.HasInstance)
         {
-           // UIManager.Instance.GamePanel.SetTimeRemain(240);
+            UIManager.Instance.GamePanel.SetTimeRemain(240);
             AudioManager.Instance.PlayBGM(AUDIO.BGM_BGM_04);
         }
     }

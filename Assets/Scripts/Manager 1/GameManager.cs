@@ -6,14 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : BaseManager<GameManager>
 {
-    private int moneys = 0;
-    public int Moneys => moneys;
+    private int cherries = 0;
+    public int Cherries => cherries;
     private bool isPlaying = false;
     public bool IsPlaying => isPlaying;
 
     public void UpdateCherries(int v)
     {
-        moneys = v;
+        cherries = v;
     }
 
     public void StartGame()
@@ -39,7 +39,7 @@ public class GameManager : BaseManager<GameManager>
 
     public void RestarGame()
     {
-        moneys = 0;
+        cherries = 0;
         ChangeScene("Menu");
         
         if (UIManager.HasInstance)
@@ -48,7 +48,7 @@ public class GameManager : BaseManager<GameManager>
             UIManager.Instance.ActiveGamePanel(false);
             UIManager.Instance.ActiveLosePanel(false);
             UIManager.Instance.ActiveMenuPanel(true);
-            UIManager.Instance.GamePanel.NumberOfMoneys.SetText("0");
+            UIManager.Instance.GamePanel.NumberOfCherries.SetText("0");
         }
     }
 
