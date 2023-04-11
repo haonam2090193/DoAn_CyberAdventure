@@ -1,47 +1,56 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Enemies : MonoBehaviour
 {
-    [SerializeField]
-    private float movingSpeed = 2f;
-    [SerializeField]
-    private GameObject[] Waypoints;
-    private int curWaypointIndex = 0;
-    Animator anim;
-    SpriteRenderer spriteRenderer;
-    
-    private void Start()
+    [Header("Attack Parameters")]
+    [SerializeField] private float attackCooldown;
+    [SerializeField] private float range;
+    [SerializeField] private int damage;
+
+    [Header("Collider Parameters")]
+    [SerializeField] private float colliderDistance;
+    [SerializeField] private BoxCollider2D boxCollider;
+
+    [Header("Player Layer")]
+
+    [SerializeField] private LayerMask playerLayer;
+    private float cooldownTimer = Mathf.Infinity;
+    private Animator anim;
+  
+
+    private void Awake()
     {
-       
         anim = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
        
-    }
-    void Update()
-    {
-        EMoving();
-    }
-    private void EMoving()
-    {
-        if (Vector2.Distance(Waypoints[curWaypointIndex].transform.position, transform.position) < 0.1f)
-        {
-            curWaypointIndex++;
-            if (curWaypointIndex >= Waypoints.Length)
-            {
-                curWaypointIndex = 0;
-            }
-        }
-        anim.SetBool("IsRunning", true);
-        transform.position = Vector2.MoveTowards(transform.position, Waypoints[curWaypointIndex].transform.position, movingSpeed * Time.deltaTime);
-        Flip();
-    }
-    private void Flip()
-    {
-        Vector3 localScale = transform.localScale;
-        localScale.x *= 1;
-        transform.localScale = localScale;
     }
 
+    private void Update()
+    {
+        cooldownTimer += Time.deltaTime;      
+        if (PlayerInSight())
+        {
+            if (cooldownTimer >= attackCooldown)
+            {
+                cooldownTimer = 0;
+                anim.SetTrigger("meleeAttack");
+            }
+        }     
+    }
+    private bool PlayerInSight()
+    {
+        RaycastHit2D hit =
+            Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+            0, Vector2.left, 0, playerLayer);    
+        return hit.collider != null;
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+    }
 }
