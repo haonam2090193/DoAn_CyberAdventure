@@ -257,7 +257,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
 --- !u!4 &718230584
 Transform:
   m_ObjectHideFlags: 0
@@ -274,9 +273,6 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &718230585
-=======
---- !u!212 &370876712
->>>>>>> 8b5473b2a127d6cfe61009dac54fd7fa25e6a786
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
