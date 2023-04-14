@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask jumpableGround;
     private float dirX;
     private Rigidbody2D body;
+
     private enum MovementState { Idle, Running, Jumping, Falling }
     private MovementState movementState;
     private void Awake()
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-1,1,1);
         }
     }
+
     private void Jumping()
     {
         if (Input.GetKeyDown(KeyCode.Space)&& IsGrounded())
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
     }
+
     private void UpdateAnimations()
     {
         if (dirX > 0f)
