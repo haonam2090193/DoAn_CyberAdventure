@@ -82,4 +82,8 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetInteger("State", (int)movementState);
     }
+    public bool canAttack()
+    {
+        return dirX == 0 && IsGrounded();
+    }
 }

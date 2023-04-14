@@ -22,10 +22,12 @@ public class LadderMovement : MonoBehaviour
         {
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(rb.velocity.x, vertical * lSpeed);
+            anim.SetBool("IsClimbing",true);
         }
         else
-        {
+        {         
             rb.gravityScale = 2.5f;
+            anim.SetBool("IsClimbing", false);
         }
     }   
     private void OnTriggerEnter2D(Collider2D collision)
