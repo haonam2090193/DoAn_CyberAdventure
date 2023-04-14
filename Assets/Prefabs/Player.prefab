@@ -200,5 +200,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a683ab916f6f542b709224e45adfd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 2
-  cooldownTimer: Infinity
+  attackCooldown: 0.5
