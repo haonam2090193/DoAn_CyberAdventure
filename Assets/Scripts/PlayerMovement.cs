@@ -12,6 +12,11 @@ public class PlayerMovement : MonoBehaviour
     private float dirX;
     private Rigidbody2D body;
 
+    private float vertical;
+    private float lSpeed = 5f;
+    private bool isLadder;
+    private bool isClimbing;
+
     private enum MovementState { Idle, Running, Jumping, Falling }
     private MovementState movementState;
     private void Awake()
@@ -27,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
         Jumping();
 
         UpdateAnimations();
+
+        Climbing();
     }
     private void Moving()
     {
@@ -47,6 +54,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)&& IsGrounded())
         {
             body.velocity = new Vector2(body.velocity.x, jumpForce);
+        }
+    }
+    private void Climbing()
+    {
+        vertical = Input.GetAxis("Vertical");
+        if (isLadder && Mathf.Abs(vertical) > 0)
+        {
+            isClimbing = true;
         }
     }
     private bool IsGrounded()
@@ -85,5 +100,35 @@ public class PlayerMovement : MonoBehaviour
     public bool canAttack()
     {
         return dirX == 0 && IsGrounded();
+    }   
+    private void FixedUpdate()
+    {
+        if (isClimbing)
+        {
+            body.gravityScale = 0f;
+            body.velocity = new Vector2(body.velocity.x, vertical * lSpeed);
+            animator.SetBool("IsClimbing", true);
+        }
+        else
+        {
+            body.gravityScale = 2.5f;
+            animator.SetBool("IsClimbing", false);
+        }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = false;
+            isClimbing = false;
+        }
+    }
+   
 }

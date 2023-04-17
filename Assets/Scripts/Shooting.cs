@@ -6,6 +6,12 @@ public class Shooting : MonoBehaviour
 {
     private Camera mainCam;
     private Vector3 mousePos;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform bulletTransform;
+    [SerializeField] bool canFire;
+    [SerializeField] float timer;
+    [SerializeField] float timeBetweenFiring;
+
     void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -21,5 +27,16 @@ public class Shooting : MonoBehaviour
         float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(0, 0, rotZ);
+        if (!canFire)
+        {
+            timer += Time.deltaTime;
+            
+        }
+        if(Input.GetMouseButtonDown(0) && canFire)
+        {
+            canFire = false;
+            Instantiate(bullet,bulletTransform.position,Quaternion.identity);
+        }
     }
+
 }
