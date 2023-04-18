@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 9192917746204743095}
   - component: {fileID: 9192917746204743080}
   - component: {fileID: 9192917746204743081}
-  - component: {fileID: 922115812}
   - component: {fileID: 1610962605743671608}
+  - component: {fileID: 1026277507}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -174,20 +174,6 @@ MonoBehaviour:
   jumpableGround:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &922115812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9192917746519735809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c66f2919d1cd08c4fa50436c8adfddbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 9192917746204743080}
-  rb: {fileID: 9192917746204743094}
 --- !u!114 &1610962605743671608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,3 +187,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCooldown: 0.5
+--- !u!114 &1026277507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192917746519735809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32966c9bed1d12544a39497b379bb8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 4
