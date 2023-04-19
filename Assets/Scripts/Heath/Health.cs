@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -25,8 +24,18 @@ public class Health : MonoBehaviour
             if (!dead)
             {
                 anim.SetTrigger("Death");
-                GetComponent<PlayerMovement>().enabled = false;
+
+                if(GetComponent<PlayerMovement>() != null)
+                    GetComponent<PlayerMovement>().enabled = false;
+
+                if(GetComponentInParent<EnemyPatrol>() != null)
+                    GetComponentInParent<EnemyPatrol>().enabled = false;
+
+                if (GetComponent<MeleeEnemies>() != null)
+                    GetComponent<MeleeEnemies>().enabled = false;
+
                 dead = true;
+
             }
         }
     }
