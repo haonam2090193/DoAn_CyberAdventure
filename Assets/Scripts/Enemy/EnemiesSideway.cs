@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemiesSideway : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
     void Start()
     {
         

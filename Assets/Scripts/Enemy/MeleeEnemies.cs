@@ -4,46 +4,55 @@ using UnityEngine;
 
 public class MeleeEnemies : MonoBehaviour
 {
-    [SerializeField] private float attackCooldown;
+    [SerializeField] private Health playerHealth;
+    private EnemyPatrol enemyPatrol;
+
+    [SerializeField] private Animator anim;
     [SerializeField] private int damage;
-    private float cooldownTimer = Mathf.Infinity;
-    [SerializeField] private BoxCollider2D hitRange;
     [SerializeField] private float range;
-    [SerializeField] private float distance;
-    [SerializeField] private LayerMask hitLayer;
-    private Animator anim;
+    [SerializeField] private float attackCooldown;
+    private float cooldownTimer = Mathf.Infinity;
 
-    private void Awake()
+    [SerializeField] private float colliderDistance;
+    [SerializeField] private BoxCollider2D boxCollider;
+   
+    [SerializeField] private LayerMask playerLayer;
+    private void Start()
     {
-        anim = GetComponent<Animator>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
     }
-
-    void Update()
+    private void Update()
     {
-        cooldownTimer += Time.deltaTime;
-
+        cooldownTimer += Time.deltaTime;              
+        DamagePlayer();
+    }
+    private void DamagePlayer()
+    {
         if (PlayerInSight())
-        {
+        {            
             if (cooldownTimer >= attackCooldown)
             {
+        
+                anim.SetTrigger("attack");
                 cooldownTimer = 0;
-                anim.SetTrigger("meleeAttack");
+              playerHealth.TakeDamage(damage);               
             }
-        }
-    }
-
-    private bool PlayerInSight()
-    {
-        RaycastHit2D hit = Physics2D.BoxCast(hitRange.bounds.center + transform.right * range * transform.localScale.x * distance,
-            new Vector3(hitRange.bounds.size.x * range,hitRange.bounds.size.y,hitRange.bounds.size.z)
-            , 0, Vector2.left,0,hitLayer);
-        return hit.collider != null;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(hitRange.bounds.center + transform.right * range * transform.localScale.x* distance, 
-            new Vector3(hitRange.bounds.size.x * range, hitRange.bounds.size.y, hitRange.bounds.size.z));
+        }     
     }
     
+    
+    public bool PlayerInSight()
+        {
+         RaycastHit2D hit =
+               Physics2D.BoxCast(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+               new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z),
+                0, Vector2.left, 0, playerLayer);
+            return hit.collider != null;
+        }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance,
+            new Vector3(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y, boxCollider.bounds.size.z));
+    }
 }

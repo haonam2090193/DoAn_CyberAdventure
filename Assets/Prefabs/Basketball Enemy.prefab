@@ -12,10 +12,12 @@ GameObject:
   - component: {fileID: 3412075132105772460}
   - component: {fileID: 3412075132105772467}
   - component: {fileID: 3412075132105772462}
-  - component: {fileID: 7233849344383636840}
-  m_Layer: 6
+  - component: {fileID: 1584605753}
+  - component: {fileID: 1675191905}
+  - component: {fileID: 1675191906}
+  m_Layer: 8
   m_Name: Basketball Enemy
-  m_TagString: Enemy
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3412075132105772465}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.8073654, y: -0.9234606, z: 0.006099633}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -133,7 +135,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.74144363, y: 1.3113359}
   m_EdgeRadius: 0
---- !u!114 &7233849344383636840
+--- !u!50 &1584605753
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3412075132105772465}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1675191905
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,14 +165,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 3412075132105772465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9f09f6f9b135f043a2a97713bc08d01, type: 3}
+  m_Script: {fileID: 11500000, guid: e4541a3eb2b5f6b4890a280679cd4d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 2
-  damage: 1
-  hitRange: {fileID: 3412075132105772462}
-  range: 1
-  distance: 1
-  hitLayer:
+  speed: 3
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  attackCooldown: 3
+  damage: 5
+  cooldownTimer: Infinity
+  playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
+  range: 1.01
+  colliderDistance: 0.39
+  boxCollider: {fileID: 3412075132105772462}
+  isAttacking: 0
+  playerHealth: {fileID: 0}
+--- !u!114 &1675191906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3412075132105772465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32966c9bed1d12544a39497b379bb8dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 72
+  iFramesDuration: 1.1
+  numberOfFlashes: 2
+  components:
+  - {fileID: 1675191905}
