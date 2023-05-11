@@ -8,7 +8,6 @@ public class MeleeEnemies : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private float range;
     [SerializeField] private int damage;
-    [SerializeField] private float range;
     [SerializeField] private float attackCooldown;
     private float cooldownTimer = Mathf.Infinity;
 
