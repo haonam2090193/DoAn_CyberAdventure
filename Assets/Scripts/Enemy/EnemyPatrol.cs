@@ -4,45 +4,78 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    [SerializeField] private float movingSpeed = 2f;
-    public float MovingSpeed 
-    { get{ return movingSpeed; }
-        set { movingSpeed = value; } }
-    [SerializeField] private GameObject[] PatrolPoint;
-    [SerializeField] private int currentPatrolIndex = 0;
-
     [SerializeField] private Animator anim;
-    private MeleeEnemies meleeEnemies;
-    private void Start()
+
+    [Header("Patrol Point")]
+    [SerializeField] private Transform leftEdge;
+    [SerializeField] private Transform rightEdge;
+
+    [Header("Enemy")]
+    [SerializeField] private Transform enemy;
+
+    [Header("Idle Time")]
+    [SerializeField] private float idleTimer;
+    [SerializeField] private float idleDuration;
+
+    [Header("Movement")]
+    [SerializeField] private float speed;
+    private Vector3 initScale;
+    private bool movingLeft;
+
+    private void Awake()
     {
-        meleeEnemies = GetComponent<MeleeEnemies>();
-        anim = GetComponent<Animator>();
+        initScale = enemy.localScale;
     }
     void Update()
     {
-        anim.SetBool("moving", true);
-        if (Vector2.Distance(PatrolPoint[currentPatrolIndex].transform.position, transform.position) < 0.1f)
-        {           
-            currentPatrolIndex++;
-            if (currentPatrolIndex >= PatrolPoint.Length)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-                currentPatrolIndex = 0;
-            }
-            else 
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-        }
-        transform.position = Vector2.MoveTowards(transform.position, PatrolPoint[currentPatrolIndex].transform.position, movingSpeed * Time.deltaTime);
-        if (meleeEnemies.PlayerInSight())
+        if (movingLeft)
         {
-            anim.SetBool("moving", false);
-            movingSpeed = 0f;
+            if (enemy.position.x >= leftEdge.position.x)
+            {
+                MoveInDirection(-1);
+            }
+            else
+            {
+                DirectionChange();
+            }
         }
         else
         {
-            movingSpeed = 2f;
+            if (enemy.position.x <= rightEdge.position.x)
+            {
+                MoveInDirection(1);
+
+            }
+            else
+            {
+                DirectionChange();
+            }
         }
-    }       
+    }
+    private void OnDisable()
+    {
+        anim.SetBool("moving", false);
+    }
+    private void MoveInDirection(int _direction)
+    {
+        idleTimer = 0;
+        anim.SetBool("moving",true);
+
+        enemy.localScale = new Vector3(Mathf.Abs(initScale.x) * _direction, 
+            initScale.y, initScale.x);
+
+        enemy.position = new Vector3(enemy.position.x + Time.deltaTime * _direction * speed,
+            enemy.position.y, enemy.position.z);
+    }
+    private void DirectionChange()
+    {
+        anim.SetBool("moving", false);
+
+        idleTimer += Time.deltaTime;
+
+        if(idleTimer > idleDuration)
+            movingLeft = !movingLeft;
+    }
+    
+    
 }

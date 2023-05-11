@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeEnemies : MonoBehaviour
@@ -8,6 +6,7 @@ public class MeleeEnemies : MonoBehaviour
     private EnemyPatrol enemyPatrol;
 
     [SerializeField] private Animator anim;
+    [SerializeField] private float range;
     [SerializeField] private int damage;
     [SerializeField] private float range;
     [SerializeField] private float attackCooldown;
